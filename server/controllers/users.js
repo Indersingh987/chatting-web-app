@@ -66,7 +66,7 @@ const login = async (req,res) => {
         }
         // id:existingUser._id
         // ,{expiresIn:604800}
-        const token = await jwt.sign({id:existingUser._id},"jwtSecret",{ expiresIn:604800 })
+        const token = await jwt.sign({ id:existingUser._id },process.env.JWT_SECRET,{ expiresIn:604800 })
 
         res.status(201).json({token,user:existingUser})
     } catch (error) {
