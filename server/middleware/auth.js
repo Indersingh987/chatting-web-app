@@ -7,7 +7,7 @@ const auth = async (req,res,next) => {
         console.log(token)
 
         if(token){
-            const decode = await jwt.verify(token,'test')
+            const decode = await jwt.verify(token,process.env.JWT_SECRET)
             console.log(decode)
             req.userId = decode.id
         }
