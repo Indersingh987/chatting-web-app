@@ -6,7 +6,7 @@ const Home = () => {
     const history = useHistory()
 
     useEffect(() => {
-        api.get('api/users/user')
+        api.get('api/users/user',{headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('token'))}`}})
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err))
     }, [])

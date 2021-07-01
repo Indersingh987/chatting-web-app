@@ -1,17 +1,22 @@
 import jwt from 'jsonwebtoken'
+import isEmpty from 'is-empty'
 
 const auth = async (req,res,next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]
-        
+
         console.log(token)
 
-        if(token){
+        if(isEmpty(token)) return res.status(403)
+
+        if( token !== null){
             const decode = await jwt.verify(token,process.env.JWT_SECRET)
-            console.log(decode)
             req.userId = decode.id
+            next()      
+        }else{
+            return res.status(403)
         }
-        next()       
+        
 
     } catch (error) {
         console.log(error.message)

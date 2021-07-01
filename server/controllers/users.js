@@ -32,7 +32,7 @@ const register = async (req,res) => {
         })
         const registerUser = await User.create(newUser)
         
-        const token = jwt.sign({id:registerUser._id},"jwtSecret",{expiresIn:604800})
+        const token = jwt.sign({id:registerUser._id},process.env.JWT_SECRET,{expiresIn:604800})
 
         res.status(201).json({token,user:registerUser})
         
@@ -64,9 +64,9 @@ const login = async (req,res) => {
         if(!doesPasswordMatch){
             return res.status(400).json({password:'Password is incorrect'})
         }
-        // id:existingUser._id
-        // ,{expiresIn:604800}
-        const token = await jwt.sign({ id:existingUser._id },process.env.JWT_SECRET,{ expiresIn:604800 })
+
+        const payload = JSON.stringify({id:existingUser._id})
+        const token = await jwt.sign({id:existingUser._id},process.env.JWT_SECRET)
 
         res.status(201).json({token,user:existingUser})
     } catch (error) {
