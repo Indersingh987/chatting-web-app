@@ -1,26 +1,27 @@
-import React,{useEffect} from 'react'
-import { useHistory } from 'react-router-dom'
-import api from '../../api'
+import React,{useEffect, useState } from 'react'
+
+import Header from './header/Header'
+import Friends from './friends/Friends'
+import Requests from './requests/Requests'
+import Search from './search/Search'
+import './Home.css'
+import { useDispatch } from 'react-redux'
+import { getAllUsers } from '../../actions/users'
 
 const Home = () => {
-    const history = useHistory()
+    const [screen, setScreen] = useState({friends:true,requests:false,search:false})
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        api.get('api/users/user',{headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('token'))}`}})
-        .then(res=>console.log(res.data))
-        .catch(err=>console.log(err))
-    }, [])
-
-    const logout = (e) => {
-        e.preventDefault()
-        localStorage.removeItem('user')
-        localStorage.clear()
-        history.push('/')
-    }
+        dispatch(getAllUsers())
+    }, [dispatch])
     
     return (
-        <div>
-            <button onClick={logout}>Logout</button>
+        <div className='home'>
+            <Header screen={screen} setScreen={setScreen}/>
+            {screen.friends && (<Friends />)}
+            {screen.requests && (<Requests />)}
+            {screen.search && (<Search />)}
         </div>
     )
 }

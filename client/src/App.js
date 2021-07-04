@@ -5,11 +5,12 @@ import Home from './components/home/Home'
 
 
 function App() {
+
   return (
     <Router>
       <div className="app">
-        <Route path={'/'} exact ><Auth /></Route>
-        <Route path={'/home'} exact ><Home /></Route>
+        <Route path={'/'} exact component={ Auth } />
+        <Route path={'/home'} exact component={Home} />
       </div>
     </Router>
   );

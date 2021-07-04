@@ -1,0 +1,8 @@
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_FAILED = 'AUTH_FAILED'
+export const AUTH_LOADING = 'AUTH_LOADING'
+export const LOGOUT = 'LOGOUT'
+export const SEARCH_USER = 'SEARCH_USER'
+export const GET_ALL_USERS = 'GET_ALL_USERS'
+export const CANCLE = 'CANCLE'
+export const REQUEST = 'REQUEST'

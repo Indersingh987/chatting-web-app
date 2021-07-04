@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  height: 60px;
+  background-color: #1f1b24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__container {
+  width: 96%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+}
+
+.header__middle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__middle__button {
+  border: none;
+  background-color: inherit;
+  color: white;
+  cursor: pointer;
+}
+
+.header__middle__button:hover {
+  border-bottom: 2px solid #24a0ed;
+}
+
+.selected--option {
+  border-bottom: 2px solid red;
+}
+
+.logout {
+  color: red;
+  cursor: pointer;
+}

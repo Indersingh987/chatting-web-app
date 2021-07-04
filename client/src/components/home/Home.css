@@ -1,0 +1,15 @@
+.home {
+  max-width: 1000px;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .home {
+    height: 100vh;
+  }
+}

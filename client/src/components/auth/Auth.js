@@ -30,7 +30,7 @@ const Auth = () => {
         }else{
             dispatch(register(formData,history))
         }
-        
+        // setRedirect(prev=>!prev)
         setFormData({name:'',email:'',password:'',password2:''})
     }
 
@@ -47,10 +47,10 @@ const Auth = () => {
                 {!isLogin && (<input name='name' value={formData.name} onChange={handleFormData} type='text' placeholder='Name' required/>)}
 
                 <input name='email' value={formData.email} onChange={handleFormData} type='email' placeholder='Email' required/>
-                <span className='red'>{errors.email}</span>
+                <span className='red'>{errors?.email}</span>
 
                 <input name='password' value={formData.password} onChange={handleFormData} type='password' placeholder='Password' required/>
-                <span className='red'>{errors.password}</span>
+                <span className='red'>{errors?.password}</span>
 
                 {!isLogin && (<input name='password2' value={formData.password2} onChange={handleFormData} type='password' placeholder='Confitm Password' required/>)}
 
