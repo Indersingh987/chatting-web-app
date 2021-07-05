@@ -3,6 +3,20 @@ import Request from '../models/request.js'
 import Friend from '../models/friend.js'
 
 
+const findRequestDocAndRemove = async (recieverId,senderId) => {
+    const reciever = await User.findById(recieverId)
+    const sender = await User.findById(senderId)
+    for(let i=0;i < reciever.requestList.length ;i++){
+        for(let j=0; j < sender.requestList.length ;j++){
+           if(JSON.stringify(reciever.requestList[i]) == JSON.stringify(sender.requestList[j])){
+               await User.findOneAndUpdate({email:reciever.email},{$pull:{requestList:reciever.requestList[i]}})
+               await User.findOneAndUpdate({email:sender.email},{$pull:{requestList:sender.requestList[j]}})
+               await Request.findByIdAndDelete(reciever.requestList[i])
+           }
+        }
+    }
+}
+
 // @route POST /api/request/send
 // @desc request send 
 // @access private
@@ -31,9 +45,11 @@ const send = async (req,res) => {
 // @desc request cancle
 // @access private
 const cancle = async (req,res) => {
-    const reciever_id = req.body.id
+    const recieverId = req.body.id
+    const id = req.userId
     try {
-        res.status(201).json({reciever_id})
+        findRequestDocAndRemove(recieverId,id)
+        res.status(201).json({recieverId})
     } catch (error) {
         console.log(error)
         res.status(500).json({error:'something went wrong'})

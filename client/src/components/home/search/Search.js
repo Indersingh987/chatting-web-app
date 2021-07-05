@@ -9,10 +9,9 @@ import { getAllUsers,cancle,request } from '../../../actions/users'
 const Search = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const dispatch = useDispatch() 
-    let users = useSelector(state=>state.users)
+    let data = useSelector(state=>state.users)
 
     useEffect(() => {
-        console.log('action dispathed')
         dispatch(getAllUsers())
     }, [dispatch])
 
@@ -21,12 +20,12 @@ const Search = () => {
         dispatch(search(searchQuery))
     }
 
-    const handleRequest = (e,isSend,id) => {
+    const handleRequest = (e,isSend,id,index) => {
         e.preventDefault()
         if(isSend){
-            dispatch(cancle(id))
+            dispatch(cancle(id,index))
         }else{
-            dispatch(request(id))
+            dispatch(request(id,index))
         }
     }
 
@@ -40,15 +39,14 @@ const Search = () => {
                 </form>
             </div>
     
-            {!users.length?(<Loading />):users.map(obj=>((<div key = {obj.user._id} className='search'>
+            {data.loading?(<Loading />):data.users?.map((obj,index)=>((<div key = {obj.user._id} className='search'>
             <Avatar className='search__img'/>
             <div className='search__info'>
                 <p>{obj.user.name}</p>
                 <span>{obj.user.email}</span>
             </div>
-            <button className='search__btn' onClick={e=>handleRequest(e,obj.isSend,obj.user._id)}>{obj.isSend?'Cancle':'Request'}</button>
+            {!obj.btn ? (<Loading />):(<button className='search__btn' onClick={e=>handleRequest(e,obj.isSend,obj.user._id,index) }  >{obj.isSend?'Cancle':'Request'}</button>)}
             </div>)))}
-           
         </div>
     )
 }

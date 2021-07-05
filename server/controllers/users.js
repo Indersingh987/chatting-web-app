@@ -9,7 +9,7 @@ const filter = (arr,from) => {
     if(!arr.length) return []
     let a = []
     for(let i=0;i < arr.length;i++){
-        if(arr[i]._id != from){
+        if( JSON.stringify(arr[i]._id) !=  JSON.stringify(from)){
             a.push(arr[i])
         }
     }
@@ -44,13 +44,13 @@ const getUsers = async (req,res) => {
                     users=[]
                     users=arr;
                 }
-                
                 for(let i=0;i<users.length;i++){
                     for(let j=0;j<requestDocs.length;j++){
                         if(JSON.stringify(users[i]._id) == JSON.stringify(requestDocs[j].to)){
                             list.push({
                                 user:users[i],
-                                isSend:true
+                                isSend:true,
+                                btn:true
                             })
                             break;
                         }else if( j < Number(requestDocs.length-Number(1))){
@@ -58,7 +58,8 @@ const getUsers = async (req,res) => {
                         }else{
                             list.push({
                                 user:users[i],
-                                isSend:false
+                                isSend:false,
+                                btn:true
                             })
                         }
                     }
@@ -68,7 +69,8 @@ const getUsers = async (req,res) => {
                 users.map(user=>{
                         list.push({
                             user,
-                            isSend:false
+                            isSend:false,
+                            btn:true
                         })
                       
                 })
@@ -127,7 +129,8 @@ const search = async (req,res) => {
                         if(JSON.stringify(users[i]._id) == JSON.stringify(requestDocs[j].to)){
                             list.push({
                                 user:users[i],
-                                isSend:true
+                                isSend:true,
+                                btn:true
                             })
                             break;
                         }else if( j < Number(requestDocs.length-Number(1))){
@@ -135,7 +138,8 @@ const search = async (req,res) => {
                         }else{
                             list.push({
                                 user:users[i],
-                                isSend:false
+                                isSend:false,
+                                btn:true
                             })
                         }
                     }
@@ -145,7 +149,8 @@ const search = async (req,res) => {
                 users.map(user=>{
                         list.push({
                             user,
-                            isSend:false
+                            isSend:false,
+                            btn:true
                         })
                       
                 })

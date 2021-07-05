@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { Avatar } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logout } from '../../../actions/auth'
-import { getAllUsers } from '../../../actions/users'
 import './Header.css'
 
 const Header = ({ screen ,setScreen }) => {
@@ -28,7 +27,6 @@ const Header = ({ screen ,setScreen }) => {
 
     const setSearchScreen = (e) => {
         e.preventDefault()
-        // dispatch(getAllUsers())
         setScreen({friends:false,requests:false,search:true})
     }
 

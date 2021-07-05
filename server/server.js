@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors())
 
-mongoose.connect(process.env.MONGODB_URL,{ useNewUrlParser: true,useUnifiedTopology:true }).then(()=>console.log('mongoDB is connected')).catch((error)=>console.log(error))
+mongoose.connect(process.env.MONGODB_URL,{ useNewUrlParser: true,useUnifiedTopology:true,useFindAndModify:false }).then(()=>console.log('mongoDB is connected')).catch((error)=>console.log(error))
     
 app.use('/api/users',usersRouter)
 app.use('/api/auth',authRouter)
