@@ -17,7 +17,7 @@ const Auth = () => {
     const [isLogin,setIsLogin] = useState(true)
     const history = useHistory()
     const dispatch = useDispatch()
-    const errors = useSelector(state=>state.auth)
+    let errors = useSelector(state=>state.auth?.errors)
 
     const handleFormData = (e) => {
         setFormData({...formData,[e.target.name]:e.target.value})
@@ -30,7 +30,6 @@ const Auth = () => {
         }else{
             dispatch(register(formData,history))
         }
-        // setRedirect(prev=>!prev)
         setFormData({name:'',email:'',password:'',password2:''})
     }
 

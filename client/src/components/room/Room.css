@@ -1,0 +1,142 @@
+.room {
+  max-width: 1000px;
+  width: 100%;
+  border: 1px solid green;
+  height: 100vh;
+}
+
+.room__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.room__header {
+  height: 60px;
+  display: flex;
+  background-color: #1f1b24;
+  color: white;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+.room__header__info {
+  margin-left: 10px;
+  flex: 1;
+}
+
+.room__header__info > p {
+  margin: 0;
+  padding: 0;
+}
+
+.room__header__info > span {
+  color: lightgray;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.room__chat {
+  background-color: #000;
+  flex: 1;
+  overflow-x: hidden;
+  flex-direction: column-reverse;
+}
+
+.room__chat > h1 {
+  color: white;
+  text-align: center;
+}
+
+.room__message {
+  max-width: 45%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+  width: fit-content;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.message-sender {
+  margin-left: auto;
+  margin-right: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.room__message > strong {
+  color: whitesmoke;
+  font-size: 14px;
+  transform: translateY(10px);
+}
+
+.room__message > p {
+  padding: 7px 12px;
+  background: #2f2a36;
+  border-radius: 3px;
+}
+
+.message-sender > p {
+  background-color: #24a0ed;
+}
+
+.room__message > span {
+  font-size: 13px;
+  font-weight: 400;
+  transform: translateY(-10px);
+}
+
+.room__footer {
+  height: 35px;
+  display: flex;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  background-color: #1f1b24;
+}
+
+.room__footer > input {
+  flex: 1;
+  height: 100%;
+  outline-width: 0;
+}
+
+.room__footer > button {
+  background-color: #24a0ed;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .room__message {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 75%;
+    margin-left: 10px;
+  }
+  .message-sender {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .room__footer {
+    height: 20px;
+  }
+  .room__footer > button {
+    height: 25px;
+  }
+}

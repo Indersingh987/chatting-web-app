@@ -3,15 +3,18 @@ import mongoose from 'mongoose'
 const messageSchema = new mongoose.Schema({
     from:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref:'users'
     },
     to:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref:'users'
     },
-    timestamp:{
-        type:Date
-    }
+    text:{
+        type:String
+    },
+    timestamp: {
+        type:String
+    }  
 })
 
 export default mongoose.model('messages',messageSchema)

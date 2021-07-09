@@ -6,7 +6,11 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: white;
+  background: #000;
+}
+
+.friends > h1 {
+  color: white;
 }
 
 .friend {
@@ -20,6 +24,8 @@
   margin-bottom: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: #2f2a36;
+  color: white;
 }
 
 .friend__info {
@@ -33,4 +39,21 @@
 
 .friend__chat-icon {
   cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+  .friend {
+    margin: 1px;
+  }
+  .friend__info {
+    line-height: 20px;
+  }
+  .friend__info > p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .friend__info > span {
+    font-size: 14px;
+    color: gray;
+  }
 }

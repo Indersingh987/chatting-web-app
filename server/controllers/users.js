@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import Request from "../models/request.js"
+import Friend from "../models/friend.js"
 import  mongoose  from 'mongoose'
 import isEmpty from 'is-empty'
 
@@ -31,19 +32,46 @@ const getUsers = async (req,res) => {
             users = users.filter(user=>user._id != id)
             const loginUser = await User.findById(id)
             const requestDocIds = loginUser.requestList
+            const friendDocIds = loginUser.friendList
             let requestDocs = []
+            let friendDocs = []
 
             for(let i=0; i <requestDocIds.length;i++){
                 const doc = await Request.findById(loginUser.requestList[i])
                 requestDocs.push(doc)
             }
-            if(requestDocIds.length){
+
+            for(let i=0; i <friendDocIds.length;i++){
+                const doc = await Friend.findById(loginUser.friendList[i])
+                friendDocs.push(doc)
+            }
+
+            //filtering users already in friend list
+            if(friendDocs.length){
+                let arr = []
+                for(let i=0; i < users.length; i++){
+                    for(let j=0; j<friendDocs.length; j++){
+                        if(JSON.stringify(friendDocs[j].user1) == JSON.stringify(users[i]._id) || JSON.stringify(friendDocs[j].user2) == JSON.stringify(users[i]._id)){
+                            break
+                        }else if(j == Number(friendDocs.length - Number(1))){
+                            arr.push(users[i])
+                            break
+                        }else{
+                            continue
+                        }
+                    }
+                }
+                users = arr
+            }
+
+            if(requestDocIds.length ){
                 for(let i=0; i <requestDocs.length;i++){
                     let arr = []
                     arr = filter(users,requestDocs[i].from)
                     users=[]
                     users=arr;
                 }
+
                 for(let i=0;i<users.length;i++){
                     for(let j=0;j<requestDocs.length;j++){
                         if(JSON.stringify(users[i]._id) == JSON.stringify(requestDocs[j].to)){
@@ -103,19 +131,46 @@ const search = async (req,res) => {
             let users = await User.find({$or:[{"name":query},{"email":query}]})
 
             if(!users.length){
-                users = await User.find()
+                res.status(201).json(list)
             }
 
             users = users.filter(user=>user._id != id)
             const loginUser = await User.findById(id)
             const requestDocIds = loginUser.requestList
+            const friendDocIds = loginUser.friendList
 
             let requestDocs = []
+            let friendDocs = []
 
             for(let i=0; i <requestDocIds.length;i++){
                 const doc = await Request.findById(loginUser.requestList[i])
                 requestDocs.push(doc)
             }
+
+            for(let i=0; i <friendDocIds.length;i++){
+                const doc = await Friend.findById(loginUser.friendList[i])
+                friendDocs.push(doc)
+            }
+
+           //filtering users already in friend list
+           if(friendDocs.length){
+            let arr = []
+            for(let i=0; i < users.length; i++){
+                for(let j=0; j<friendDocs.length; j++){
+                    if(JSON.stringify(friendDocs[j].user1) == JSON.stringify(users[i]._id) || JSON.stringify(friendDocs[j].user2) == JSON.stringify(users[i]._id)){
+                        break
+                    }else if(j == Number(friendDocs.length - Number(1))){
+                        arr.push(users[i])
+                        break
+                    }else{
+                        continue
+                    }
+                }
+            }
+            users = arr
+        }
+
+            //setting isSend and filtring accroding to request list
             if(requestDocIds.length){
                 for(let i=0; i <requestDocs.length;i++){
                     let arr = []

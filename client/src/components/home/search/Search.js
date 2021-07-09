@@ -39,7 +39,7 @@ const Search = () => {
                 </form>
             </div>
     
-            {data.loading?(<Loading />):data.users?.map((obj,index)=>((<div key = {obj.user._id} className='search'>
+            {data.loading?(<Loading />):!data.users.length ? (<h1>No Result Found</h1>):data.users?.map((obj,index)=>((<div key = {obj.user._id} className='search'>
             <Avatar className='search__img'/>
             <div className='search__info'>
                 <p>{obj.user.name}</p>

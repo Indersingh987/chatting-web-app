@@ -6,7 +6,11 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: white;
+  background: #000;
+}
+
+.requests > h1 {
+  color: white;
 }
 
 .request {
@@ -19,6 +23,8 @@
   margin-bottom: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: #2f2a36;
+  color: white;
 }
 
 .request__img {
@@ -33,4 +39,25 @@
 .request__info > p {
   padding: 0;
   margin: 0;
+}
+
+.request__btn {
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .request {
+    margin: 1px;
+  }
+  .request__info {
+    line-height: 20px;
+  }
+  .request__info > p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .request__info > span {
+    font-size: 14px;
+    color: gray;
+  }
 }

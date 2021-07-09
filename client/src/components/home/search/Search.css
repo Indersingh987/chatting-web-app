@@ -6,7 +6,11 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: white;
+  background-color: #000;
+}
+
+.search-main > h1 {
+  color: white;
 }
 
 .search-main__header {
@@ -56,6 +60,8 @@
   margin-bottom: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: #2f2a36;
+  color: white;
 }
 
 .search__img {
@@ -79,8 +85,25 @@
 .search__btn {
   margin-right: 10px;
   border: none;
-  background-color: #1f1b24;
+  background-color: #000;
   color: white;
   padding: 5px 15px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+  .search {
+    margin: 1px;
+  }
+  .search__info {
+    line-height: 20px;
+  }
+  .search__info > p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .search__info > span {
+    font-size: 14px;
+    color: gray;
+  }
 }
