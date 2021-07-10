@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import  mongoose  from 'mongoose'
 import cors from 'cors'
 import Pusher from 'pusher'
+import path from 'path'
 
 import usersRouter from './routes/users.js'
 import authRouter from './routes/auth.js'
@@ -66,5 +67,15 @@ app.use('/api/auth',authRouter)
 app.use('/api/request',requestRouter)
 app.use('/api/friend',friendRouter)
 app.use('/api/message',messageRouter)
+
+const __dirname = path.resolve()
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname,'/client/build')))
+
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
 
 app.listen(port,console.log(`app is running at ${port}`))

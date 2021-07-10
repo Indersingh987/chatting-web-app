@@ -3,7 +3,7 @@ import './Room.css'
 import { Avatar } from '@material-ui/core'
 import { useDispatch,useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import {getList,create,clearRoom} from '../../actions/room'
+import {getList,create} from '../../actions/room'
 import Loading from '../loading/Loading'
 import isEmpty from 'is-empty'
 import moment from 'moment'
@@ -33,7 +33,7 @@ const Room = () => {
         });
         const channel = pusher.subscribe('messages');
         channel.bind('inserted', function(data) {
-            if(data.senderId == id){
+            if(data.senderId === id){
                 data.isSender = false
             }
             setList(prev=>[...prev,data])
@@ -43,7 +43,7 @@ const Room = () => {
             channel.unbind_all()
             channel.unsubscribe()
         }
-    }, [list])
+    }, [list,id])
 
     const handleSubmit = (e) => {
         e.preventDefault()
