@@ -9,7 +9,7 @@ import {
 export const register = (formData,history,setRedirect) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_LOADING,payload:{loading:true}})
-        api.post('/api/auth/register',formData)
+        api.post('/api/auth/register',formData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
         .then(response=>{
           
             dispatch({type:AUTH_SUCCESS,payload:{user:response.data.user, token:response.data.token ,loading:false}})
@@ -26,7 +26,7 @@ export const register = (formData,history,setRedirect) => async (dispatch) =>{
 export const login = (formData,history,setRedirect) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_LOADING,payload:{loading:true}})
-        api.post('/api/auth/login',formData)
+        api.post('/api/auth/login',formData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
         .then(response=>{
             dispatch({type:AUTH_SUCCESS,payload:{user:response.data?.user, token:response.data?.token ,loading:false}})
             history.push('/home')

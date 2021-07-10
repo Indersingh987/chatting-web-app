@@ -23,7 +23,7 @@ export const search = (searchQuery) => dispatch => {
 
 export const cancle = (id,index) => dispatch => {
     dispatch({type:CANCLE_LOADING,payload:index})
-    api.post('/api/request/cancle',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`}})
+    api.post('/api/request/cancle',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
     .then(res=>{
         dispatch({type:CANCLE,payload:index})
     })
@@ -32,7 +32,7 @@ export const cancle = (id,index) => dispatch => {
 
 export const request = (id,index) => dispatch => {
     dispatch({type:REQUEST_LOADING,payload:index})
-    api.post('/api/request/send',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`}})
+    api.post('/api/request/send',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
     .then(res=>{
         dispatch({type:REQUEST,payload:index})
     })
