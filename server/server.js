@@ -19,9 +19,9 @@ import User from './models/User.js'
 const app = express()
 const port = process.env.PORT || 5000
 const pusher = new Pusher({
-  appId: process.env.APP_ID,
-  key: process.env.PUSHER_KEY,
-  secret: process.env.PUSHER_SECRET,
+  appId: "1233075",
+  key: "6e3173648537bdc9fd8c",
+  secret: "d317f10e2cb465281f28",
   cluster: "ap2",
   useTLS: true
 });
