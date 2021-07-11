@@ -50,6 +50,7 @@ const register = async (req,res) => {
 const login = async (req,res) => {
     const data = req.body
 
+
     const {errors,isValid} = validateLoginData(data)
 
     if(!isValid){

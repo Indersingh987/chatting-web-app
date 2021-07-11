@@ -3,7 +3,7 @@ import { REQUEST_LIST, REQUEST_LIST_LOADING,ACCEPT,ACCEPT_LOADING } from './type
 
 const getRequestList = () => dispatch =>{
     dispatch({type:REQUEST_LIST_LOADING})
-    axios.get('/api/request',{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
+    axios.get('/api/request',{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`}})
     .then(res=>{
         dispatch({type:REQUEST_LIST,payload:res.data})
     })
@@ -14,7 +14,7 @@ const getRequestList = () => dispatch =>{
 
 const acceptRequest = (id,index) => dispatch => {
     dispatch({type:ACCEPT_LOADING,payload:index})
-    axios.post('/api/request/accept',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
+    axios.post('/api/request/accept',{ id },{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`}})
     .then(res=>{
         console.log(res.data)
         dispatch({type:ACCEPT,payload:index})
