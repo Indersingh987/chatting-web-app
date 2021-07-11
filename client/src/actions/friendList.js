@@ -1,9 +1,9 @@
-import api from '../api'
+import axios from 'axios'
 import {FRIEND_LIST_LOADING,FRIEND_LIST} from './types'
 
 export const getFriendList = () => dispatch => {
     dispatch({type:FRIEND_LIST_LOADING})
-    api.get('/api/friend',{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
+    axios.get('/api/friend',{headers:{'Authorization':`Bearer ${JSON.parse(sessionStorage.getItem('token'))}`,'Content-Type':'application/x-www-form-urlencoded'}})
     .then(res=>dispatch({type:FRIEND_LIST,payload:res.data}))
     .catch(err=>console.log('err in fething friend list',err))
 }
