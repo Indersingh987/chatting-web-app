@@ -49,6 +49,7 @@ db.once('open',()=>{
           id:messageDoc._id,
           isSender:true,
           senderId:from._id,
+          recieverId:messageDoc.to,
           msg:messageDoc.text,
           timestamp:messageDoc.timestamp
          }

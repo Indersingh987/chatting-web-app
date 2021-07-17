@@ -36,8 +36,11 @@ const Room = () => {
         channel.bind('inserted', function(data) {
             if(data.senderId === id){
                 data.isSender = false
+                setList(prev=>[...prev,data])
+            }else if(data.recieverId === user._id){
+                data.isSender = true
+                setList(prev=>[...prev,data])
             }
-            if(data.senderId === id || data.senderId === user._id) setList(prev=>[...prev,data])
          });
 
         return () => {
