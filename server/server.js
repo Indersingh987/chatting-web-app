@@ -50,7 +50,7 @@ db.once('open',()=>{
           id:messageDoc._id,
           isSender:true,
           senderId:from._id,
-          recieverId:to,
+          recieverId:to._id,
           msg:messageDoc.text,
           timestamp:messageDoc.timestamp
          }
