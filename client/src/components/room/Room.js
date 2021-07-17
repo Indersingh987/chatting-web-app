@@ -34,6 +34,7 @@ const Room = () => {
         });
         const channel = pusher.subscribe('messages');
         channel.bind('inserted', function(data) {
+            console.log(JSON.stringify(data.senderId),JSON.stringify(id),JSON.stringify(data.recieverId),JSON.stringify(user._id))
             if(JSON.stringify(data.senderId) === JSON.stringify(id) && JSON.stringify(data.recieverId) === JSON.stringify(user._id)){
                 data.isSender = false
                 setList(prev=>[...prev,data])
