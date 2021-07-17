@@ -16,6 +16,7 @@ const Room = () => {
     const dispatch = useDispatch()
     const [text,setText] = useState('')
     const { id } = useParams();
+    const user = JSON.parse(sessionStorage.getItem(user))
 
     useEffect(() => {
         dispatch(getList(id))
@@ -36,7 +37,7 @@ const Room = () => {
             if(data.senderId === id){
                 data.isSender = false
             }
-            setList(prev=>[...prev,data])
+            if(data.senderId === id || data.senderId === user._id) setList(prev=>[...prev,data])
          });
 
         return () => {
