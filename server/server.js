@@ -45,11 +45,12 @@ db.once('open',()=>{
       if(change.operationType === 'insert'){
         const messageDoc = change.fullDocument
         const from = await User.findById(messageDoc.from)
+        const to = await User.findById(messageDoc.to)
         const obj = {
           id:messageDoc._id,
           isSender:true,
           senderId:from._id,
-          recieverId:messageDoc.to,
+          recieverId:to,
           msg:messageDoc.text,
           timestamp:messageDoc.timestamp
          }
