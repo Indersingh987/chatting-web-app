@@ -37,7 +37,7 @@ const Room = () => {
             if(data.senderId === id && data.recieverId === user._id){
                 data.isSender = false
                 setList(prev=>[...prev,data])
-            }else{
+            }else if(data.senderId === user._id && data.recieverId === id){
                 data.isSender = true
                 setList(prev=>[...prev,data])
             }
