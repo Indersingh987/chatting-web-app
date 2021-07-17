@@ -16,7 +16,7 @@ const Room = () => {
     const dispatch = useDispatch()
     const [text,setText] = useState('')
     const { id } = useParams();
-    const user = JSON.parse(sessionStorage.getItem(user))
+    const user = JSON.parse(sessionStorage.getItem('user'))
 
     useEffect(() => {
         dispatch(getList(id))
@@ -34,12 +34,13 @@ const Room = () => {
         });
         const channel = pusher.subscribe('messages');
         channel.bind('inserted', function(data) {
-            console.log(data.senderId,data.recieverId,user._id,id)
+            console.log(user)
+            console.log(data.senderId,data.recieverId,user?._id,id)
             console.log(typeof data.senderId,typeof data.recieverId,typeof user._id,typeof id)
-            if(data.senderId === id && JSON.stringify(data.recieverId) === JSON.stringify(user._id)){
+            if(data.senderId === id && JSON.stringify(data.recieverId) === JSON.stringify(user?._id)){
                 data.isSender = false
                 setList(prev=>[...prev,data])
-            }else if(JSON.stringify(data.senderId) === JSON.stringify(user._id) && JSON.stringify(data.recieverId) === JSON.stringify(id)){
+            }else if(JSON.stringify(data.senderId) === JSON.stringify(user?._id) && JSON.stringify(data.recieverId) === JSON.stringify(id)){
                 data.isSender = true
                 setList(prev=>[...prev,data])
             }
