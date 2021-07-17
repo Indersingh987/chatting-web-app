@@ -34,10 +34,10 @@ const Room = () => {
         });
         const channel = pusher.subscribe('messages');
         channel.bind('inserted', function(data) {
-            if(data.senderId === id){
+            if(data.senderId === id && data.recieverId === user._id){
                 data.isSender = false
                 setList(prev=>[...prev,data])
-            }else if(data.recieverId === user._id){
+            }else{
                 data.isSender = true
                 setList(prev=>[...prev,data])
             }
