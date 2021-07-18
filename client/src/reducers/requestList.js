@@ -1,4 +1,4 @@
-import {REQUEST_LIST_LOADING,REQUEST_LIST, ACCEPT, ACCEPT_LOADING} from '../actions/types'
+import {REQUEST_LIST_LOADING,REQUEST_LIST, ACCEPT, ACCEPT_LOADING,REJECT_LOADING, REJECT} from '../actions/types'
 
 
 const reducer = (state = {list:[],loading:false}, action) => {
@@ -12,7 +12,19 @@ const reducer = (state = {list:[],loading:false}, action) => {
         let a = [...state.list]
         a[action.payload] = { ...a[action.payload],btn:false }
         return {...state,list:a}
+    case REJECT_LOADING:
+        let a = [...state.list]
+        a[action.payload] = { ...a[action.payload],btn:false }
+        return {...state,list:a}
     case ACCEPT:
+        let b = []
+        for(let i=0;i < state.list.length; i++){
+            if(i !== action.payload){
+                b.push(state.list[i])
+            }
+        }
+        return {...state,list:b}
+    case REJECT:
         let b = []
         for(let i=0;i < state.list.length; i++){
             if(i !== action.payload){

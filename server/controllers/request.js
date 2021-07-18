@@ -89,9 +89,21 @@ const accept = async (req,res) => {
 // @desc request reject
 // @access private
 const reject = async (req,res) => {
-
+    const senderId = req.body.id
+    const recieverId = req.userId
     try {
-        
+        const sender = await User.findById(senderId)
+        const reciever = await User.findById(recieverId)
+
+        for(let i=0; i < reciever.requestList.length ; i++){
+            const doc = await Request.findById(reciever.requestList[i])
+            if(JSON.stringify(doc.from) == JSON.stringify(senderId)){
+                await Request.findByIdAndDelete(doc._id)
+                await User.findOneAndUpdate({email:sender.email},{$pull:{requestList:doc._id}})
+                await User.findOneAndUpdate({email:reciever.email},{$pull:{requestList:doc._id}})
+            }
+        }  
+        res.status(201)
     } catch (error) {
         console.log(error)
     }

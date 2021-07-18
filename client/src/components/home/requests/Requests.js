@@ -2,7 +2,7 @@ import React,{ useEffect } from 'react'
 import './Requests.css'
 import { Avatar } from '@material-ui/core'
 import { useDispatch,useSelector } from 'react-redux'
-import { getRequestList, acceptRequest } from '../../../actions/requestList'
+import { getRequestList, acceptRequest,rejectRequest } from '../../../actions/requestList'
 import Loading from '../../loading/Loading'
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -22,7 +22,7 @@ const Requests = () => {
 
     const reject = (e,index,id) => {
         e.preventDefault()
-        console.log('reject')
+        dispatch(rejectRequest(id,index))
     }
 
     return (
