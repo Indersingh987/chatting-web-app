@@ -9,9 +9,9 @@ const reducer = (state = {list:[],loading:false}, action) => {
     case REQUEST_LIST:
         return {list:action.payload,loading:false}
     case ACCEPT_LOADING:
-        let a = [...state.list]
-        a[action.payload] = { ...a[action.payload],btn:false }
-        return {...state,list:a}
+        let x = [...state.list]
+        x[action.payload] = { ...x[action.payload],btn:false }
+        return {...state,list:x}
     case REJECT_LOADING:
         let a = [...state.list]
         a[action.payload] = { ...a[action.payload],btn:false }
@@ -25,13 +25,13 @@ const reducer = (state = {list:[],loading:false}, action) => {
         }
         return {...state,list:b}
     case REJECT:
-        let b = []
+        let y = []
         for(let i=0;i < state.list.length; i++){
             if(i !== action.payload){
-                b.push(state.list[i])
+                y.push(state.list[i])
             }
         }
-        return {...state,list:b}
+        return {...state,list:y}
     default:
         return state
     }

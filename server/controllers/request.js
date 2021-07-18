@@ -103,7 +103,7 @@ const reject = async (req,res) => {
                 await User.findOneAndUpdate({email:reciever.email},{$pull:{requestList:doc._id}})
             }
         }  
-        res.status(201)
+        res.status(201).json({msg:'rejectted'})
     } catch (error) {
         console.log(error)
     }
