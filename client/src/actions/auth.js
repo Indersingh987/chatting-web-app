@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../api'
 import {
     AUTH_SUCCESS,
     AUTH_FAILED,
@@ -9,7 +9,7 @@ import {
 export const register = (formData,history) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_LOADING,payload:{loading:true}})
-        axios.post('/api/auth/register',formData)
+        api.post('/api/auth/register',formData)
         .then(response=>{
           
             dispatch({type:AUTH_SUCCESS,payload:{user:response.data.user, token:response.data.token ,loading:false}})
@@ -27,7 +27,7 @@ export const register = (formData,history) => async (dispatch) =>{
 export const login = (formData,history) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_LOADING,payload:{loading:true}})
-        axios.post('/api/auth/login',formData)
+        api.post('/api/auth/login',formData)
         .then(response=>{
             dispatch({type:AUTH_SUCCESS,payload:{user:response.data?.user, token:response.data?.token ,loading:false}})
             history.push('/home')

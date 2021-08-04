@@ -7,7 +7,7 @@ import {getList,create} from '../../actions/room'
 import Loading from '../loading/Loading'
 import isEmpty from 'is-empty'
 import moment from 'moment'
-import Pusher from 'pusher-js'
+import io from 'socket.io-client'
 
 const Room = () => {
     let {list,friend,loading} = useSelector(state=>state.room)
@@ -22,32 +22,28 @@ const Room = () => {
         dispatch(getList(id))
     }, [dispatch,id])
 
+    
+    useEffect(() => {
+        const socket = io('http://localhost:5000', { transports: ['websocket', 'polling', 'flashsocket'] });
+        socket.on("message", data => {
+          console.log(data);
+          if(JSON.stringify(data.senderId) === JSON.stringify(id) && JSON.stringify(data.recieverId) === JSON.stringify(user._id)){
+            data.isSender = false
+            setList(prev=>[...prev,data])
+          }else if(JSON.stringify(data.senderId) === JSON.stringify(user._id) && JSON.stringify(data.recieverId) === JSON.stringify(id)){
+                data.isSender = true
+                setList(prev=>[...prev,data])
+          } 
+        });
+
+        return () => socket.disconnect();
+    }, []);
+
 
     useEffect(() => {
         setList(list)
         setLength(Number(list.length-Number(1)))
     }, [list])
-
-    useEffect(() => {
-        const pusher = new Pusher('6e3173648537bdc9fd8c', {
-            cluster: 'ap2'
-        });
-        const channel = pusher.subscribe('messages');
-        channel.bind('inserted', function(data) {
-            if(JSON.stringify(data.senderId) === JSON.stringify(id) && JSON.stringify(data.recieverId) === JSON.stringify(user._id)){
-                data.isSender = false
-                setList(prev=>[...prev,data])
-            }else if(JSON.stringify(data.senderId) === JSON.stringify(user._id) && JSON.stringify(data.recieverId) === JSON.stringify(id)){
-                data.isSender = true
-                setList(prev=>[...prev,data])
-            }
-         });
-
-        return () => {
-            channel.unbind_all()
-            channel.unsubscribe()
-        }
-    }, [list,id])
 
     const handleSubmit = (e) => {
         e.preventDefault()

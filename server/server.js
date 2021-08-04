@@ -7,6 +7,8 @@ import  mongoose  from 'mongoose'
 import cors from 'cors'
 import Pusher from 'pusher'
 import path from 'path'
+import http from 'http'
+import {Server} from 'socket.io'
 
 import usersRouter from './routes/users.js'
 import authRouter from './routes/auth.js'
@@ -32,37 +34,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors())
 
+
 mongoose.connect(process.env.MONGODB_URL,{ useNewUrlParser: true,useUnifiedTopology:true,useFindAndModify:false }).then(()=>console.log('mongoDB is connected')).catch((error)=>console.log(error))
 
-const db = mongoose.connection
-db.once('open',()=>{
-  const collection = db.collection('messages')
-  const changeStream = collection.watch()
-
-  changeStream.on('change',async (change)=>{
-
-    try {
-      if(change.operationType === 'insert'){
-        const messageDoc = change.fullDocument
-        const from = await User.findById(messageDoc.from)
-        const to = await User.findById(messageDoc.to)
-        const obj = {
-          id:messageDoc._id,
-          isSender:true,
-          senderId:from._id,
-          recieverId:to._id,
-          msg:messageDoc.text,
-          timestamp:messageDoc.timestamp
-         }
-          pusher.trigger("messages", "inserted",  obj );
-      }
-      
-    } catch (error) {
-      console.log('Error Trigring Pusher')
-    }
-    
-  })
-})
 
 app.use('/api/users',usersRouter)
 app.use('/api/auth',authRouter)
@@ -70,8 +44,47 @@ app.use('/api/request',requestRouter)
 app.use('/api/friend',friendRouter)
 app.use('/api/message',messageRouter)
 
-const __dirname = path.resolve()
+const server = http.createServer(app)
+const io = new Server(server)
 
+
+const db = mongoose.connection
+io.on("connection", (socket) => {
+  console.log("socket io connected");
+  db.once('open',()=>{
+    const collection = db.collection('messages')
+    const changeStream = collection.watch()
+
+    changeStream.on('change',async (change)=>{
+
+      try {
+        if(change.operationType === 'insert'){
+          const messageDoc = change.fullDocument
+          const from = await User.findById(messageDoc.from)
+          const to = await User.findById(messageDoc.to)
+          const obj = {
+            id:messageDoc._id,
+            isSender:true,
+            senderId:from._id,
+            recieverId:to._id,
+            msg:messageDoc.text,
+            timestamp:messageDoc.timestamp
+          }
+            socket.emit("message",obj)
+        }
+        socket.on("disconnect", () => {
+          console.log("socket io disconnected");
+        }); 
+      } catch (error) {
+        console.log('Error Trigring Pusher')
+      }
+      
+    })
+  })
+})
+
+// for production only----------
+const __dirname = path.resolve()
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname,'/client/build')))
 
@@ -79,5 +92,6 @@ if(process.env.NODE_ENV === 'production'){
     res.sendFile(path.resolve(__dirname,'client','build','index.html'))
   })
 }
+//--------
 
-app.listen(port,console.log(`app is running at ${port}`))
+server.listen(port,console.log(`app is running at ${port}`))
